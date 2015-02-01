@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><widget id="http://test.samsung.com/widget/wac/tizen_appcontrol" min-version="1.0" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets">
+  <name short="AppControl">app-control</name>
+  <icon height="75" src="icon.png" width="75"/>
+  <tizen:app-control>
+    <tizen:src name="edit1.html"/>
+    <tizen:operation name="http://tizen.org/appcontrol/operation/edit"/>
+    <tizen:mime name="image/jpg"/>
+  </tizen:app-control>
+  <tizen:app-control>
+    <tizen:src name="edit2.html"/>
+    <tizen:operation name="http://tizen.org/appcontrol/operation/view"/>
+    <tizen:mime name="audio/ogg"/>
+  </tizen:app-control>
+  <tizen:app-control>
+    <tizen:src name="edit3.html"/>
+    <tizen:operation name="http://tizen.org/appcontrol/operation/call"/>
+    <tizen:mime name="image/png"/>
+  </tizen:app-control>
+  <tizen:app-control>
+    <tizen:src name="edit4.html"/>
+    <tizen:operation name="http://tizen.org/appcontrol/operation/send"/>
+    <tizen:mime name="text/css"/>
+  </tizen:app-control>
+  <content src="index.html"/>
+<tizen:application id="6NfK1HgeJV.appcontrol" package="6NfK1HgeJV" required_version="1.0"/></widget>

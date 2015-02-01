@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget id="http://test.samsung.com/widget/wac/appwidget" min-version="1.0" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets">
+  <tizen:app-widget id="tizenScmgz.Sample.default" primary="true">
+    <tizen:box-label>My DynamicBox</tizen:box-label>
+    <tizen:box-content src="app-widget/index.html">
+        <tizen:box-size>1x1</tizen:box-size>
+    </tizen:box-content>
+    <tizen:box-content src="app-widget/index2.html">
+        <tizen:box-size>1x1</tizen:box-size>
+    </tizen:box-content>
+  </tizen:app-widget>
+  <tizen:application id="erj4675nvh.appwidget" package="erj4675nvh" required_version="1.0"/>
+</widget>
