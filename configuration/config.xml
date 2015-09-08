@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" version="00.00.0001" viewmodes="fullscreen windowed floating">
+  <name>hello</name>
+  <name xml:lang="en">hello</name>
+  <icon src="icon.png" />
+
+  <!-- tizen application element -->
+  <tizen:application id="GfeI4eyhBG.1" package="GfeI4eyhBG" required_version="2.3" ambient_support="disable"/>
+
+  <!-- tizen setting element -->
+  <!-- unecessary for tizenw
+  <tizen:setting screen-orientation="landscape" context-menu="disable"/>
+  -->
+  <tizen:setting background-support="disable" encryption="disable" hwkey-event="enable"/>
+
+  <!-- tizen app-control element -->
+  <tizen:app-control>
+    <tizen:src name="index.html"/>
+    <tizen:operation name="http://tizen.org/appcontrol/operation/default"/>
+    <tizen:uri name="http"/>
+    <tizen:mime name="html"/>
+  </tizen:app-control>
+
+  <!-- tizen ime element -->
+  <tizen:ime>
+    <tizen:uuid>6135122a-a428-40d2-8feb-a75f462c202c</tizen:uuid>
+    <tizen:languages>
+      <tizen:language>en-us</tizen:language>
+      <tizen:language>ko-kr</tizen:language>
+    </tizen:languages>
+  </tizen:ime>
+
+  <!-- tizen service element -->
+  <tizen:service id="GfeI4eyhBG.1.service" auto-restart="true" on-boot="true">
+    <tizen:content src="service.js"/>
+    <tizen:name>WebService</tizen:name>
+    <tizen:icon src="service.png"/>
+    <tizen:description>WebService</tizen:description>
+  <tizen:metadata key="service_key_1" value="service_value_1"/>
+    <tizen:metadata key="service_key_2"/>
+    <tizen:category name="http://tizen.org/category/service"/>
+  </tizen:service>
+
+  <!-- tizen content-security-policy element -->
+  <tizen:content-security-policy>"img-src http://test.com 'unsafe-inline'; script-src 'unsafe-inline';"</tizen:content-security-policy>
+  <!-- unecessary for tizenw
+  <tizen:content-security-policy-report-only>img-src http://test.com 'unsafe-inline'; script-src 'unsafe-inline';</tizen:content-security-policy-report-only>
+  -->
+
+  <!-- tizen allow-navigation element -->
+  <!-- unecessary for tizenw
+  <tizen:allow-navigation>test.com</tizen:allow-navigation>
+  -->
+
+  <!-- tizen metadata -->
+  <tizen:metadata key="key_1" value="value_1"/>
+  <tizen:metadata key="key_2"/>
+
+  <!-- unecessary for tizenw
+  <tizen:app-widget id="jNZe0gZhHG.Dynmic.default" primary="true">
+    <tizen:box-label xml:lang="en">WEB WIDGET</tizen:box-label>
+    <tizen:box-label xml:lang="ef">WEB WIDGET</tizen:box-label>
+    <tizen:box-label xml:lang="tc">WEB WIDGET</tizen:box-label>
+    <tizen:box-icon src="icon.png"/>
+    <tizen:box-content src="box/index.html">
+      <tizen:box-size>1x1</tizen:box-size>
+      <tizen:box-size>2x1</tizen:box-size>
+      <tizen:box-size>2x2</tizen:box-size>
+      <tizen:pd src="pd/index.html" width="720" height="200"/>
+   </tizen:box-content>
+ </tizen:app-widget>
+ -->
+
+  <!-- splash screen -->
+  <!-- unecessary for tizenw
+  <tizen:splash src="splash.jpg" />
+  -->
+
+  <!-- category -->
+  <tizen:category name="http://tizen.org/category/wearable_clock"/>
+</widget>

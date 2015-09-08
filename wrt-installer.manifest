@@ -1,0 +1,20 @@
+<manifest>
+  <define>
+    <domain name="wrt-installer" />
+    <request>
+        <smack request="deviced::power" type="rwx"/>
+        <smack request="deviced::display" type="rwx"/>
+        <smack request="system::homedir" type="rwxat"/>
+        <smack request="aul::terminate" type="x"/>
+    </request>
+    <provide>
+      <label name="wrt-installer::installer" />
+    </provide>
+  </define>
+  <request>
+    <domain name="_" />
+  </request>
+  <assign>
+      <filesystem path="/usr/bin/wrt-installer" label="wrt-installer" exec_label="wrt-installer"/>
+  </assign>
+</manifest>

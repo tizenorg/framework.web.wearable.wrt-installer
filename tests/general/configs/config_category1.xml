@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget id="http://test.samsung.com/widget/wac/privilege" min-version="1.0" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets">
+  <category name="testCategory1"/>
+  <category name="testCategory2"/>
+  <tizen:application id="5154575452.privilege" package="5154575452" required_version="1.0"/>
+</widget>

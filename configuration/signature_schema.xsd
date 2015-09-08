@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/2000/09/xmldsig#" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <!--
+    Relax NG Grammar for XML Signature
+    Namespace: http://www.w3.org/2000/09/xmldsig#
+    $Revision: 1.7 $ on $Date: 2008/07/16 18:04:37 $ by $Author: roessler $
+
+    Copyright 2001 The Internet Society and W3C (Massachusetts Institute
+            of Technology, Institut National de Recherche en Informatique et en
+            Automatique, Keio University). All Rights Reserved.
+    http://www.w3.org/Consortium/Legal/
+
+    This document is governed by the W3C Software License [1] as described
+    in the FAQ [2].
+
+    [1] http://www.w3.org/Consortium/Legal/copyright-software-19980720
+    [2] http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620.html#DTD
+
+    Constructed by hand from xmldsig-core-schema.xsd by
+    Norman.Walsh@marklogic.com on 5 May 2008.
+
+    Notes:
+
+    You must not use the RELAX NG DTD Compatibility features with thi
+    grammar. DTD Compatibility features, ID type attributes, and
+    wildcard attributes are mutually exclusive.
+
+    The definition for the Signature element includes a SignatureType
+    pattern. The rest of the patterns are "inline". This is a matter of
+    style. I constructed only one "type" pattern as an example of the
+    style, not because it's significant in the Signature pattern.
+  -->
+  <!-- Start Signature -->
+  <xs:complexType name="SignatureType">
+    <xs:sequence>
+      <xs:element ref="ds:SignedInfo"/>
+      <xs:element ref="ds:SignatureValue"/>
+      <xs:element minOccurs="0" ref="ds:KeyInfo"/>
+      <xs:element maxOccurs="unbounded" ref="ds:Object"/>
+    </xs:sequence>
+    <xs:attribute name="Id" type="xs:ID"/>
+  </xs:complexType>
+  <xs:element name="Signature" type="ds:SignatureType"/>
+  <xs:element name="SignatureValue">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:base64Binary">
+          <xs:attribute name="Id" type="xs:ID"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <!-- Start SignedInfo -->
+  <xs:element name="SignedInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ds:CanonicalizationMethod"/>
+        <xs:element ref="ds:SignatureMethod"/>
+        <xs:element maxOccurs="unbounded" ref="ds:Reference"/>
+      </xs:sequence>
+      <xs:attribute name="Id" type="xs:ID"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CanonicalizationMethod">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ds:anyElement"/>
+      <xs:attribute name="Algorithm" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignatureMethod">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ds:HMACOutputLength"/>
+        <xs:group ref="ds:anyOtherElement"/>
+      </xs:choice>
+      <xs:attribute name="Algorithm" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- Start Reference -->
+  <xs:element name="Reference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ds:Transforms"/>
+        <xs:element ref="ds:DigestMethod"/>
+        <xs:element ref="ds:DigestValue"/>
+      </xs:sequence>
+      <xs:attribute name="Id" type="xs:ID"/>
+      <xs:attribute name="URI" type="xs:anyURI"/>
+      <xs:attribute name="Type" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Transforms">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ds:Transform"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Transform">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="ds:anyOtherElement"/>
+        <xs:element ref="ds:XPath"/>
+      </xs:choice>
+      <xs:attribute name="Algorithm" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="XPath" type="xs:string"/>
+  <!-- End Reference -->
+  <xs:element name="DigestMethod">
+    <xs:complexType>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ds:anyOtherElement"/>
+      <xs:attribute name="Algorithm" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DigestValue" type="ds:DigestValueType"/>
+  <xs:simpleType name="DigestValueType">
+    <xs:restriction base="xs:base64Binary"/>
+  </xs:simpleType>
+  <!-- End SignedInfo -->
+  <!-- Start KeyInfo -->
+  <xs:element name="KeyInfo">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ds:KeyName"/>
+        <xs:element ref="ds:KeyValue"/>
+        <xs:element ref="ds:RetrievalMethod"/>
+        <xs:element ref="ds:X509Data"/>
+        <xs:element ref="ds:PGPData"/>
+        <xs:element ref="ds:SPKIData"/>
+        <xs:element ref="ds:MgmtData"/>
+        <xs:group ref="ds:anyOtherElement"/>
+      </xs:choice>
+      <xs:attribute name="Id" type="xs:ID"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="KeyName" type="xs:string"/>
+  <xs:element name="MgmtData" type="xs:string"/>
+  <xs:element name="KeyValue">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ds:DSAKeyValue"/>
+        <xs:element ref="ds:RSAKeyValue"/>
+        <xs:group ref="ds:anyOtherElement"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievalMethod">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ds:Transforms"/>
+      </xs:sequence>
+      <xs:attribute name="URI" use="required" type="xs:anyURI"/>
+      <xs:attribute name="Type" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- Start X509Data -->
+  <xs:element name="X509Data">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ds:X509IssuerSerial"/>
+        <xs:element ref="ds:X509SKI"/>
+        <xs:element ref="ds:X509SubjectName"/>
+        <xs:element ref="ds:X509Certificate"/>
+        <xs:element ref="ds:X509CRL"/>
+        <xs:group ref="ds:anyOtherElement"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="X509IssuerSerial">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ds:X509IssuerName"/>
+        <xs:element ref="ds:X509SerialNumber"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="X509IssuerName" type="xs:string"/>
+  <xs:element name="X509SerialNumber" type="xs:integer"/>
+  <xs:element name="X509SKI" type="xs:base64Binary"/>
+  <xs:element name="X509SubjectName" type="xs:string"/>
+  <xs:element name="X509Certificate" type="xs:base64Binary"/>
+  <xs:element name="X509CRL" type="xs:base64Binary"/>
+  <!-- End X509Data -->
+  <!-- Begin PGPData -->
+  <xs:element name="PGPData">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="ds:PGPKeyID"/>
+          <xs:element minOccurs="0" ref="ds:PGPKeyPacket"/>
+          <xs:group minOccurs="0" maxOccurs="unbounded" ref="ds:anyOtherElement"/>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="ds:PGPKeyPacket"/>
+          <xs:group minOccurs="0" maxOccurs="unbounded" ref="ds:anyOtherElement"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PGPKeyID" type="xs:base64Binary"/>
+  <xs:element name="PGPKeyPacket" type="xs:base64Binary"/>
+  <!-- End PGPData -->
+  <!-- Begin SPKIData -->
+  <xs:element name="SPKIData">
+    <xs:complexType>
+      <xs:sequence maxOccurs="unbounded">
+        <xs:element ref="ds:SPKISexp"/>
+        <xs:group minOccurs="0" maxOccurs="unbounded" ref="ds:anyOtherElement"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SPKISexp" type="xs:base64Binary"/>
+  <!-- End SPKIData -->
+  <!-- End KeyInfo -->
+  <!-- Start Object (Manifest, SignatureProperty) -->
+  <xs:element name="Object">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element ref="ds:SignatureProperties"/>
+        <xs:group minOccurs="0" maxOccurs="unbounded" ref="ds:anyElement"/>
+      </xs:sequence>
+      <xs:attribute name="Id" type="xs:ID"/>
+      <xs:attribute name="MimeType" type="xs:string"/>
+      <xs:attribute name="Encoding" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Manifest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ds:Reference"/>
+      </xs:sequence>
+      <xs:attribute name="Id" type="xs:ID"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignatureProperties">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ds:SignatureProperty"/>
+      </xs:sequence>
+      <xs:attribute name="Id" type="xs:ID"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SignatureProperty">
+    <xs:complexType>
+      <xs:group maxOccurs="unbounded" ref="ds:anyOtherElement"/>
+      <xs:attribute name="Id" type="xs:ID"/>
+      <xs:attribute name="Target" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- End Object (Manifest, SignatureProperty) -->
+  <!-- Start Algorithm Parameters -->
+  <xs:element name="HMACOutputLength" type="xs:integer"/>
+  <!-- Start KeyValue Element-types -->
+  <xs:element name="DSAKeyValue">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="ds:P"/>
+          <xs:element ref="ds:Q"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="ds:G"/>
+        <xs:element ref="ds:Y"/>
+        <xs:element minOccurs="0" ref="ds:J"/>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="ds:Seed"/>
+          <xs:element ref="ds:PgenCounter"/>
+        </xs:sequence>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="P" type="ds:CryptoBinary"/>
+  <xs:element name="Q" type="ds:CryptoBinary"/>
+  <xs:element name="G" type="ds:CryptoBinary"/>
+  <xs:element name="Y" type="ds:CryptoBinary"/>
+  <xs:element name="J" type="ds:CryptoBinary"/>
+  <xs:element name="Seed" type="ds:CryptoBinary"/>
+  <xs:element name="PgenCounter" type="ds:CryptoBinary"/>
+  <xs:simpleType name="CryptoBinary">
+    <xs:restriction base="xs:base64Binary"/>
+  </xs:simpleType>
+  <xs:element name="RSAKeyValue">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ds:Modulus"/>
+        <xs:element ref="ds:Exponent"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Modulus" type="ds:CryptoBinary"/>
+  <xs:element name="Exponent" type="ds:CryptoBinary"/>
+  <!-- End KeyValue Element-types -->
+  <!-- End Signature -->
+  <!-- Definitions for the *any* wild card and the *any other* wildcard -->
+  <xs:attributeGroup name="anyAttribute">
+    <xs:anyAttribute processContents="skip"/>
+  </xs:attributeGroup>
+  <xs:group name="anyElement">
+    <xs:sequence>
+      <xs:any processContents="skip"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="anyOtherElement">
+    <xs:choice>
+      <xs:any namespace="##other" processContents="skip"/>
+      <xs:any namespace="##local" processContents="skip"/>
+    </xs:choice>
+  </xs:group>
+</xs:schema>
+<!-- EOF -->
