@@ -6,6 +6,7 @@
         <smack request="deviced::display" type="rwx"/>
         <smack request="system::homedir" type="rwxat"/>
         <smack request="aul::terminate" type="x"/>
+        <smack request="system::ext_storage" type="rwxat"/>
     </request>
     <provide>
       <label name="wrt-installer::installer" />

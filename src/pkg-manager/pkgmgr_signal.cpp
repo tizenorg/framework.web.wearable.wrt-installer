@@ -26,6 +26,8 @@
 #include <pkg-manager/pkgmgr_signal.h>
 #include <installer_log.h>
 
+#define BUF_SIZE 4096
+
 namespace {
 // package type sent in every signal
 const char PKGMGR_WEBAPP_TYPE[] = "wgt";
@@ -209,15 +211,21 @@ bool PkgmgrSignal::startJob(Jobs::InstallationType type)
     return true;
 }
 
-bool PkgmgrSignal::endJob(Jobs::Exceptions::Type ecode)
+bool PkgmgrSignal::endJob(Jobs::Exceptions::Type type, const char* message)
 {
-    if(ecode == Jobs::Exceptions::Type::Success)
+    if(type == Jobs::Exceptions::Type::Success)
     {
         return sendSignal(PKGMGR_END_KEY, PKGMGR_END_SUCCESS);
     }
     else
     {
-        sendSignal(PKGMGR_ERROR, DPL::lexical_cast<std::string>(ecode));
+        std::string ecode = DPL::lexical_cast<std::string>(type);
+        if (message != NULL) {
+            char buf[BUF_SIZE] = {'\0'};
+
+            snprintf(buf, BUF_SIZE - 1, "%s:%s", ecode.c_str(), message);
+            sendSignal(PKGMGR_ERROR, buf);
+        }
         return sendSignal(PKGMGR_END_KEY, PKGMGR_END_FAILURE);
     }
 }

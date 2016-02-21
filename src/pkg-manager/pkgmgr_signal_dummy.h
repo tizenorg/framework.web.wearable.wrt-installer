@@ -56,7 +56,7 @@ class PkgmgrSignalDummy : public IPkgmgrSignal
         return false;
     }
 
-    bool endJob(Jobs::Exceptions::Type ecode DPL_UNUSED)
+    bool endJob(Jobs::Exceptions::Type ecode DPL_UNUSED, const char* message DPL_UNUSED)
     {
         return false;
     }

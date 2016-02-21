@@ -155,6 +155,18 @@ void installFinishedCallback(void *userParam,
             errorStatus = WRT_INSTALLER_ERROR_INSTALL_OSP_SERVCIE;
             break;
 
+        case Jobs::Exceptions::ErrorInstallPrivilegeUsingLegacyFailed:
+            errorStatus = WGT_INSTALLER_ERR_PRIVILEGE_USING_LEGACY_FAILED;
+            break;
+
+        case Jobs::Exceptions::ErrorInstallPrivilegeUnknownFailed:
+            errorStatus = WGT_INSTALLER_ERR_PRIVILEGE_UNKNOWN_FAILED;
+            break;
+
+        case Jobs::Exceptions::ErrorInstallPrivilegeUnauthorizedFailed:
+            errorStatus = WGT_INSTALLER_ERR_PRIVILEGE_UNAUTHORIZED_FAILED;
+            break;
+
         default:
             errorStatus = WRT_INSTALLER_ERROR_UNKNOWN;
             break;

@@ -323,7 +323,7 @@ void JobWidgetInstall::SendFinishedFailure()
     _D("Call widget install failure finishedCallback");
 
     // send signal of pkgmgr
-    GetInstallerStruct().pkgmgrInterface->endJob(m_exceptionCaught);
+    GetInstallerStruct().pkgmgrInterface->endJob(m_exceptionCaught, m_exceptionMessage.c_str());
 
     GetInstallerStruct().finishedCallback(GetInstallerStruct().userParam,
                                           DPL::ToUTF8String(
