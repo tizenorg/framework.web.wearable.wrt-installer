@@ -61,10 +61,6 @@ enum Type
     ErrorInvalidPrivilege = 41,                 ///< invalid privilege.
     ErrorPrivilegeLevelViolation,
 
-    ErrorInstallPrivilegeUsingLegacyFailed = 43,
-    ErrorInstallPrivilegeUnknownFailed = 44,
-    ErrorInstallPrivilegeUnauthorizedFailed = 45,
-
     ErrorMenuIconNotFound = 51,                 ///<
 
     ErrorFatalError = 61,                       ///< failure in db operation

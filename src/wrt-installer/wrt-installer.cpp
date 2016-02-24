@@ -1208,24 +1208,6 @@ void WrtInstaller::showErrorMsg(WrtErrStatus status, std::string tizenId,
                     tizenId.c_str(), printMsg.c_str());
             break;
 
-        case WGT_INSTALLER_ERR_PRIVILEGE_USING_LEGACY_FAILED:
-            fprintf(stderr, "## wrt-installer : %s %s has failed - "
-                    "privilege using legacy failed\n",
-                    tizenId.c_str(), printMsg.c_str());
-            break;
-
-        case WGT_INSTALLER_ERR_PRIVILEGE_UNKNOWN_FAILED:
-            fprintf(stderr, "## wrt-installer : %s %s has failed - "
-                    "privilege unknown failed\n",
-                    tizenId.c_str(), printMsg.c_str());
-            break;
-
-        case WGT_INSTALLER_ERR_PRIVILEGE_UNAUTHORIZED_FAILED:
-            fprintf(stderr, "## wrt-installer : %s %s has failed - "
-                    "privilege unauthorized failed\n",
-                    tizenId.c_str(), printMsg.c_str());
-            break;
-
         case WRT_INSTALLER_ERROR_MENU_ICON_NOT_FOUND:
             fprintf(stderr, "## wrt-installer : %s %s has failed - "
                     "menu icon could not find\n",

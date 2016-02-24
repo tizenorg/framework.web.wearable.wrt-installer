@@ -48,7 +48,7 @@ public:
     std::string getCallerId() const;
 
     bool startJob(Jobs::InstallationType type);
-    bool endJob(Jobs::Exceptions::Type ecode, const char* message);
+    bool endJob(Jobs::Exceptions::Type ecode);
     bool sendProgress(int percent);
     bool sendIconPath(const std::string & iconpath);
     void setRecoveryFile();

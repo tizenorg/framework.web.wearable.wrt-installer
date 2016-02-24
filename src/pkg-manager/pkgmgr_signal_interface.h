@@ -36,7 +36,7 @@ class IPkgmgrSignal
     virtual std::string getCallerId() const = 0;
 
     virtual bool startJob(Jobs::InstallationType type) = 0;
-    virtual bool endJob(Jobs::Exceptions::Type ecode, const char* message = NULL) = 0;
+    virtual bool endJob(Jobs::Exceptions::Type ecode) = 0;
     virtual bool sendProgress(int percent) = 0;
     virtual bool sendIconPath(const std::string & iconpath) = 0;
     virtual ~IPkgmgrSignal(){}

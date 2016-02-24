@@ -95,10 +95,6 @@ DECLARE_JOB_EXCEPTION(Base, NotSupportRDSUpdate, ErrorNotSupportRDSUpdate)
 DECLARE_JOB_EXCEPTION(Base, SmackTransactionFailed, ErrorFatalError)
 DECLARE_JOB_EXCEPTION(Base, OutOfStorageFailed, ErrorOutOfStorage)
 DECLARE_JOB_EXCEPTION(Base, RecoveryFailed, ErrorFatalError)
-
-DECLARE_JOB_EXCEPTION(Base, PrivilegeUsingLegacyFailed, ErrorInstallPrivilegeUsingLegacyFailed)
-DECLARE_JOB_EXCEPTION(Base, PrivilegeUnknownkFailed, ErrorInstallPrivilegeUnknownFailed)
-DECLARE_JOB_EXCEPTION(Base, PrivilegeUnauthorizedFailed, ErrorInstallPrivilegeUnauthorizedFailed)
 } //namespace
 } //namespace
 } //namespace

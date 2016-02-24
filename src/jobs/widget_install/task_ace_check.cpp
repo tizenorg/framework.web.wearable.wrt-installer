@@ -45,11 +45,11 @@ TaskAceCheck::TaskAceCheck(InstallerContext& context) :
     m_context(context)
 {
     AddStep(&TaskAceCheck::StartStep);
-    AddStep(&TaskAceCheck::StepPrivilegeCheck);
     AddStep(&TaskAceCheck::StepPrepareForAce);
     AddStep(&TaskAceCheck::StepAceCheck);
     AddStep(&TaskAceCheck::StepProcessAceResponse);
     AddStep(&TaskAceCheck::StepCheckAceResponse);
+    AddStep(&TaskAceCheck::StepPrivilegeCheck);
     AddStep(&TaskAceCheck::EndStep);
 }
 
@@ -236,7 +236,7 @@ void TaskAceCheck::StepPrivilegeCheck()
     _D("StepPrivilegeCheck!");
 
     GList* privilege_list = NULL;
-    char* error_privilege_name = NULL;
+    char* error_message = NULL;
 
     WrtDB::WidgetDAOReadOnly widgetDao(m_context.widgetConfig.tzAppid);
     WidgetFeatureSet featureSet = widgetDao.getFeaturesList();
@@ -271,31 +271,26 @@ void TaskAceCheck::StepPrivilegeCheck()
             PRVMGR_PACKAGE_TYPE_WRT,
             privilege_list,
             cert_svc_visibility,
-            &error_privilege_name);
+            &error_message);
 
     if (ret != PRVMGR_ERR_NONE) {
-        _E("privilege_manager_verify_privilege_list(PRVMGR_PACKAGE_TYPE_WRT) failed.\n%s", error_privilege_name);
+        if (ret == PRVMGR_ERR_INVALID_PRIVILEGE) {
+            _E("error meesages : %s", error_message);
+        } else {
+            _E("error meesages : %s", error_message);
+        }
+
         if (privilege_list != NULL) {
             g_list_free(privilege_list);
             privilege_list = NULL;
         }
 
-        if (error_privilege_name != NULL) {
-            std::string error_message = error_privilege_name;
-            free(error_privilege_name);
-            error_privilege_name = NULL;
-            if (strstr(error_message.c_str(), "[DEPRECATED_PRIVILEGE]") != NULL) {
-                ThrowMsg(Exceptions::PrivilegeUsingLegacyFailed, error_message.c_str());
-            } else if (strstr(error_message.c_str(), "[NO_EXIST_PRIVILEGE]") != NULL) {
-                ThrowMsg(Exceptions::PrivilegeUnknownkFailed, error_message.c_str());
-            } else if (strstr(error_message.c_str(), "[MISMATCHED_PRIVILEGE_LEVEL]") != NULL) {
-                ThrowMsg(Exceptions::PrivilegeUnauthorizedFailed, error_message.c_str());
-            } else {
-                ThrowMsg(Exceptions::SignatureVerificationFailed, error_message.c_str());
-            }
+        if (error_message != NULL) {
+            std::string err = error_message;
+            free(error_message);
+            error_message = NULL;
+            ThrowMsg(Exceptions::AceCheckFailed, err.c_str());
         }
-    } else {
-        _D("privilege_manager_verify_privilege_list(PRVMGR_PACKAGE_TYPE_WRT) is ok.");
     }
 
     if (privilege_list != NULL) {
@@ -303,9 +298,9 @@ void TaskAceCheck::StepPrivilegeCheck()
         privilege_list = NULL;
     }
 
-    if (error_privilege_name != NULL) {
-        free(error_privilege_name);
-        error_privilege_name = NULL;
+    if (error_message != NULL) {
+        free(error_message);
+        error_message = NULL;
     }
 }
 
