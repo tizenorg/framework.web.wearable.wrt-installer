@@ -279,7 +279,7 @@ void JobWidgetUninstall::SendFinishedFailure()
     fprintf(stderr, "[Err:%d] %s", m_exceptionCaught, m_exceptionMessage.c_str());
 
     // send signal of pkgmgr
-    GetInstallerStruct().pkgmgrInterface->endJob(m_exceptionCaught);
+    GetInstallerStruct().pkgmgrInterface->endJob(m_exceptionCaught, m_exceptionMessage.c_str());
 
     _D("Call widget uninstall failure finishedCallback");
     GetInstallerStruct().finishedCallback(GetInstallerStruct().userParam,
